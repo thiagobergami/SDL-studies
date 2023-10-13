@@ -1,0 +1,7 @@
+/tmp/
+/platformer
+/windows/
+/Makefile.windows
+
+*.o
+*.opendb
