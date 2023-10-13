@@ -3,5 +3,7 @@
 /windows/
 /Makefile.windows
 
+/.vs
+
 *.o
 *.opendb

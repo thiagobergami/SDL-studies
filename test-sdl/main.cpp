@@ -18,6 +18,16 @@ SDL_Surface* gScreenSurface = NULL;
 
 SDL_Surface* gHelloWorld = NULL;
 
+enum KeyPressSurfaces
+{
+	KEY_PRESS_SURFACE_DEFAULT,
+	KEY_PRESS_SURFACE_UP,
+	KEY_PRESS_SURFFACE_DOWN,
+	KEY_PRESS_SURFACE_LEFT,
+	KEY_PRESS_SURFACE_RIGHT,
+	KEY_PRESS_SURFACE_TOTAL
+};
+
 bool init()
 {
 	bool success = true;
@@ -28,7 +38,8 @@ bool init()
 		success = false;
 	}
 	else
-	{
+	{	
+		
 		gWindow = SDL_CreateWindow("Thiago's SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 		{
@@ -84,13 +95,26 @@ int main(int argc, char* args[])
 			printf("Falied to load media!\n");
 		}
 		else
-		{
-			SDL_BlitSurface(gHelloWorld, NULL, gScreenSurface, NULL);
+		{	
+			bool quit = false;
+			// Event handler
+			SDL_Event e;
 
-			SDL_UpdateWindowSurface(gWindow);
+			while (!quit)
+			{
+				while (SDL_PollEvent(&e) != 0)
+				{
+					if (e.type == SDL_QUIT)
+					{
+						quit = true;
+					}
+				}
 
-			SDL_Event e; bool quit = false; while (quit == false) { while (SDL_PollEvent(&e)) { if (e.type == SDL_QUIT) quit = true; } }
-		}
+				SDL_BlitSurface(gHelloWorld, NULL, gScreenSurface, NULL);
+
+				SDL_UpdateWindowSurface(gWindow);
+			}
+		}			
 	}
 
 	close();
